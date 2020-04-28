@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Calculadora</title>
+</head>
+
+<body>
+    <div class="contenedor">
+        <table cellspacing="0" cellpadding="0">
+            <tr>
+                <td colspan="4">
+                    <input type="text" class="pantallas" id="pantalla" maxlength="20" readonly placeholder="0">
+                </td>
+            </tr>
+
+            <tr>
+                <td colspan="4">
+                    <input type="text" class="pantallas" id="resultado" maxlength="20" readonly>
+                </td>
+            </tr>
+
+            <tr>
+                <td colspan="2"><input type="button" class="botones-laterales" value="RETR" id="retroceder"
+                        onclick="retroceder()">
+                </td>
+                <td><input type="button" value="/" class="botones-laterales" id="dividir" onclick="pulsarTecla('/')">
+                </td>
+                <td><input type="button" value="x" class="botones-laterales" id="multiplicar"
+                        onclick="pulsarTecla('*')">
+                </td>
+            </tr>
+            <tr>
+                <td><input type="button" value="7" class="botones" id="7" onclick="pulsarTecla('7')"></td>
+                <td><input type="button" value="8" class="botones" id="8" onclick="pulsarTecla('8')"></td>
+                <td><input type="button" value="9" class="botones" id="9" onclick="pulsarTecla('9')"></td>
+                <td><input type="button" value="-" class="botones-laterales" id="restar" onclick="pulsarTecla('-')">
+                </td>
+            </tr>
+            <tr>
+                <td><input type="button" value="4" class="botones" id="4" onclick="pulsarTecla('4')"></td>
+                <td><input type="button" value="5" class="botones" id="5" onclick="pulsarTecla('5')"></td>
+                <td><input type="button" value="6" class="botones" id="6" onclick="pulsarTecla('6')"></td>
+                <td><input type="button" value="+" class="botones-laterales" id="sumar" onclick="pulsarTecla('+')"></td>
+            </tr>
+            <tr>
+                <td><input type="button" value="1" class="botones" id="1" onclick="pulsarTecla('1')"></td>
+                <td><input type="button" value="2" class="botones" id="2" onclick="pulsarTecla('2')"></td>
+                <td><input type="button" value="3" class="botones" id="3" onclick="pulsarTecla('3')"></td>
+                <td><input type="button" value="=" class="botones-laterales" id="igual" onclick="pulsarIgual()"></td>
+            </tr>
+            <tr>
+                <td colspan="2"><input type="button" value="0" class="botones" id="0" onclick="pulsarTecla('0')"></td>
+                <td><input type="button" value="," class="botones" id="coma" onclick="pulsarTecla('.')"></td>
+                <td><input type="button" value="C" class="botones-laterales" id="borrar" onclick="restablecer()"></td>
+            </tr>
+        </table>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+
+</html>
