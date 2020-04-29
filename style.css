@@ -1,87 +1,88 @@
 /* ----- AJUSTES GENERALES ----- */
 * {
-    margin: 0;
-    padding: 0;
-    font-size: 30px;
+  margin: 0;
+  padding: 0;
+  font-size: 30px;
 }
 
 *:focus {
-    outline: 0;
+  outline: 0;
 }
 
 /* ----- TABLA ----- */
 table {
-    margin: 25px auto;
-    border: 1px solid darkorange;
+  margin: 25px auto;
+  border: 1px solid darkorange;
+  border-spacing: 0;
 }
 
 /* Celdas de la tabla */
 td {
-    width: 105px;
-    height: 80px;
+  width: 105px;
+  height: 80px;
+  padding: 0;
 }
 
 /* Cuerpo de la tabla */
 tbody {
-    box-shadow: 10px 10px 10px gray;
+  box-shadow: 10px 10px 10px gray;
 }
 
-/* ----- PANTALLAS ----- */
-.pantallas {
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
+/* ----- PANTALLA ----- */
+.calculator__screen {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
 
-    height: 120px;
-    width: 100%;
+  height: 120px;
+  width: 100%;
 
-    background-color: black;
-    border: none;
+  background-color: black;
+  border: none;
 
-
-    text-align: right;
-    color: white;
+  text-align: right;
+  color: white;
 }
 
 /* Pantalla de operaciones de la calculadora */
-#pantalla {
-    padding: 15px;
-    font-size: 25px;
+.calculator__screen--operations {
+  padding: 15px;
+  font-size: 90%;
 }
 
 /* Pantalla de resultados de la calculadora */
-#resultado {
-    padding: 15px;
-    font-size: 40px;
+.calculator__screen--result {
+  padding: 15px;
+  font-size: 150%;
 }
 
 /* ----- BOTONES ----- */
 input {
-    background-color: lightgray;
-    margin: 0;
-    width: 100%;
-    height: 100%;
-    border: none;
+  background-color: lightgray;
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
 }
 
-.botones,
-.botones-laterales {
-    border: 1px solid rgb(65, 65, 65);
+.calculator__button,
+.calculator__side-button {
+  border: 1px solid rgb(65, 65, 65);
 }
 
 /* Botones centrales de la calculadora */
-.botones {
-    transition: 0.25s;
+.calculator__button {
+  transition: 0.25s;
 }
 
 /* Botones laterales de la calculadora */
-.botones-laterales {
-    background-color: rgb(255, 115, 0);
-    color: white;
-    transition: 0.25s;
+.calculator__side-button {
+  background-color: rgb(255, 115, 0);
+  color: white;
+  transition: 0.25s;
 }
 
-.botones:active,
-.botones-laterales:active {
-    background-color: gray;
+.calculator__button:active,
+.calculator__side-button:active {
+  background-color: gray;
 }
