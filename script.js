@@ -1,97 +1,22 @@
-/*
-var operacion = "";
-var resultado = "";
-const VACIO = "";
-console.log('*** Calculadora hecha por: Alvhix ***\n  -> En proceso de mejora');
-
-function pulsarTecla(tecla) {
-    if (esVacio()) {
-        operacion = tecla;
-        if (!acabaOperador()) {
-            calcular();
-        }
-    } else {
-        operacion += tecla;
-        if (!acabaOperador()) {
-            calcular();
-        }
-    }
-    imprimir('pantalla');
-}
-
-function acabaOperador() {
-    var acaba;
-    if (operacion.endsWith('+') || operacion.endsWith('-') || operacion.endsWith('*') || operacion.endsWith('/') || operacion.endsWith('.')) {
-        acaba = true;
-    } else {
-        acaba = false;
-    }
-    return acaba;
-}
-
-function esVacio() {
-    var esVacio;
-    if (operacion == VACIO) {
-        esVacio = true;
-    } else {
-        esVacio = false;
-    }
-    return esVacio;
-}
-
-function pulsarIgual() {
-    resultado = eval(operacion);
-    operacion = resultado;
-    imprimir('completo');
-}
-
-function calcular() {
-    resultado = eval(operacion);
-    imprimir('completo');
-}
-
-function retroceder() {
-    operacion = operacion.slice(0, -1);
-    imprimir('pantalla');
-}
-
-function restablecer() {
-    operacion = VACIO;
-    document.getElementById("pantalla").value = VACIO;
-    document.getElementById("resultado").value = VACIO;
-}
-
-function imprimir(caso) {
-    switch (caso) {
-        case 'pantalla':
-            document.getElementById("pantalla").value = operacion;
-            break;
-        case 'completo':
-            document.getElementById("pantalla").value = VACIO;
-            document.getElementById("resultado").value = resultado;
-            break;
-        default:
-            console.log('Error de parámetros');
-    }
-
-}
-*/
-
 var model = (function () {
   var calculator = {
-    firstNumber: '',
-    secondNumber: '',
+    number: '',
+    storedNumber: 0,
     operator: '',
     decimal: false
   };
 
   return {
-    addNumber: function (number) {
-      calculator.firstNumber += number;
+    addDigit: function (number) {
+      calculator.number += number;
     },
 
     getNumber: function () {
-      return calculator.firstNumber;
+      return calculator.number;
+    },
+
+    getStoredNumber: function () {
+      return calculator.storedNumber;
     },
 
     getDecimal: function () {
@@ -106,30 +31,18 @@ var model = (function () {
       calculator.decimal = value;
     },
 
-    checkFirstNumber: function () {
-      return calculator.firstNumber === '';
-    },
-
-    checkSecondNumber: function () {
-      return calculator.secondNumber === '';
-    },
-
-    checkOperator: function () {
-      return calculator.operator === '=';
-    },
-
     storeNumber: function () {
       // Stores the number in another variable
-      calculator.secondNumber = parseFloat(calculator.firstNumber);
+      calculator.storedNumber = parseFloat(calculator.number);
 
       // Cleans the first number variable
-      calculator.firstNumber = '';
+      calculator.number = '';
 
       // Resets the decimal variable
       calculator.decimal = false;
     },
 
-    storeOperator: function (operator) {
+    setOperator: function (operator) {
       calculator.operator = operator;
     },
 
@@ -138,8 +51,8 @@ var model = (function () {
 
       operator = calculator.operator;
 
-      number1 = parseFloat(calculator.secondNumber);
-      number2 = parseFloat(calculator.firstNumber);
+      number1 = parseFloat(calculator.storedNumber);
+      number2 = parseFloat(calculator.number);
       switch (operator) {
         case '+':
           result = number1 + number2;
@@ -151,29 +64,25 @@ var model = (function () {
           result = number1 * number2;
           break;
         case '/':
-          if (number2 === 0) {
-            result = 'Undefined result'
-          } else {
-            result = number1 / number2;
-          }
+          result = number1 / number2;
           break;
       }
 
-      // Store the result in the secondNumber and reset the firstNumber variable
-      calculator.secondNumber = result;
-      calculator.firstNumber = '';
+      // Store the result in the storedNumber and reset the number variable
+      calculator.storedNumber = result;
+      calculator.number = '';
 
       return result;
     },
 
     deleteLastDigit: function () {
-      calculator.firstNumber = calculator.firstNumber.slice(0, calculator.firstNumber.length - 1);
+      calculator.number = calculator.number.slice(0, calculator.number.length - 1);
     },
 
     deleteAll: function () {
       calculator = {
-        firstNumber: '',
-        secondNumber: '',
+        number: '',
+        storedNumber: '',
         operator: '',
         decimal: false
       }
@@ -191,6 +100,8 @@ var view = (function () {
     table: '.calculator',
     operationScreen: '.calculator__screen--operations',
     resultScreen: '.calculator__screen--result',
+    btn: 'calculator__button',
+    sideBtn: 'calculator__side-button'
   }
 
   return {
@@ -222,60 +133,85 @@ var controller = (function (m, v) {
   var setUpEventListeners = function () {
     var selector = v.getDomStrings();
     // Event delegation
-    // If the keypad is pressed then execute process input method
+
+    // If the table is pressed then execute process input method
     document.querySelector(selector.table).addEventListener('click', proccessInput);
   }
 
   var proccessInput = function (event) {
-    var value = event.target.value;
+    var value, dom;
 
-    switch (value) {
-      case 'RETR':
-        // Calls the delete the last digit function
-        delPressed();
-        break;
-      case '/':
-      case 'x':
-      case '-':
-      case '+':
-        // Calls the operator pressed function passing the operator
-        operatorPressed(value);
-        break;
-      case '=':
-        resultPressed();
-        break;
-      case 'AC':
-        // Calls the clear function
-        delAllPressed();
-        break;
-      default:
-        // Calls the numberPressed function passing the number as a string
-        numberPressed(value);
+    value = event.target.value;
+    dom = v.getDomStrings();
+
+    // If the clicked element has one of the allowed classes
+    if (event.srcElement.className === dom.btn || event.srcElement.className === dom.sideBtn) {
+      switch (value) {
+        case 'RETR':
+          // Calls the delete the last digit function
+          delPressed();
+          break;
+        case '/':
+        case 'x':
+        case '-':
+        case '+':
+          // Calls the operator pressed function passing the operator
+          operatorPressed(value);
+          break;
+        case '=':
+          resultPressed();
+          break;
+        case 'AC':
+          // Calls the clear function
+          delAllPressed();
+          break;
+        default:
+          // Calls the numberPressed function passing the number as a string
+          numberPressed(value);
+      }
     }
   };
 
   var numberPressed = function (digit) {
     var number;
 
-    // 1. Checks if the decimal was not setted and the number introduced was not the decimal
+    /* Exceptions:
+    // 1. The user adds decimals more times than one
+        -> Check the decimal variable and if the last digit added is a digit
+
+    // 2. The user pressed the assignment operator 
+        -> Check if the assignment operator was pressed just before 
+    */
+
+    // 1. First exception
     if (m.getDecimal() && digit === '.') {
+      // Does nothing
+
       return;
-    } else if (m.checkOperator()) {
+
+      // 2. Second exception
+    } else if (m.getOperator() === '=') {
+
       // 1. Clear both screens
       v.cleanResultScreen();
       v.cleanOperationScreen();
-    }
-    // 1. Stores the digit in the model object
-    m.addNumber(digit);
 
-    // 2. Gets the full number
+      // 2. Reset operator
+      m.setOperator('');
+    }
+
+    // 1. Add and stores the digit in the model object
+    m.addDigit(digit);
+
+    // 2. Get the full number
     number = m.getNumber();
 
-    // 3. Displays on screen
+    // 3. Display on screen
     v.displayNumber(number);
 
     // 4. If the decimal key was pressed
     if (digit === '.') {
+      // Store the status of the decimal variable
       m.setDecimal(true);
     }
 
@@ -284,14 +220,25 @@ var controller = (function (m, v) {
   var operatorPressed = function (operator) {
     var number, result;
 
-    // If there is not number before the operator pressed, then adds a 0 automatically
-    if (m.checkFirstNumber()) {
-      // 1. Adds a zero
-      numberPressed('0');
-    }
+    /* Exceptions:
+    // 1. The user adds operators more times than one
+        -> Check if there is not operator and stored number in the model
+  
+    // 2. The user pressed the assignment operator
+        -> -
+    */
 
-    // If the second number is empty
-    if (m.checkSecondNumber()) {
+    // If the operator is not setted and the stored number is null or undefined
+    if (!m.getOperator() && !m.getStoredNumber() && !m.getNumber()) {
+      // 1. Add and stores the digit in the model object
+      m.addDigit(operator);
+
+      // 2. Get the full number
+      number = m.getNumber();
+
+      // 3. Display on screen
+      v.displayNumber(number);
+    } else if (!m.getOperator() && m.getNumber() && m.getNumber() !== '-') {
       // 1. Get the number
       number = m.getNumber();
 
@@ -299,16 +246,14 @@ var controller = (function (m, v) {
       m.storeNumber();
 
       // 3. Store the operator
-      m.storeOperator(operator);
+      m.setOperator(operator);
 
       // 4. Clean the result screen
       v.cleanResultScreen();
 
-      // 5. Display the operation into the main screen
+      // 5. Display the operation into the operation screen
       v.displayOperation(number, operator);
-    } else {
-      // secondNumber = 6;
-      // screen: 6 +
+    } else if (m.getNumber() && m.getNumber() !== '-' && m.getStoredNumber()) {
       // 1. Get the first number
       number = m.getNumber();
 
@@ -319,10 +264,53 @@ var controller = (function (m, v) {
       result = m.operation();
 
       // 4. Store the operator
-      m.storeOperator(operator);
+      m.setOperator(operator);
 
       // 5. Displays the result on the result screen
       v.displayNumber(result);
+    }
+
+  };
+
+
+  var resultPressed = function () {
+    var number, result;
+
+    /* Exceptions: 
+    // 1. Press the result button when there is no numbers stored
+        -> Check if the first number is not null or undefined
+
+    // 2. Press the result button when there is no operator
+        -> Check that the last operator stored is not null or undefined
+
+    // 3. Press the result button more times than one
+        -> Check that the last operator stored is not the assignment operator
+    */
+
+    // 1. Get the number
+    number = m.getNumber();
+
+    // First exception
+    if (number) {
+
+      // Second and third exception
+      if (m.getOperator() !== '' && m.getOperator() !== '=') {
+
+        // 2. Get the result
+        result = m.operation();
+
+        // 3. Display in the operator screen
+        v.displayOperation(number, '=');
+
+        // 4. Display the result
+        v.displayNumber(result);
+
+        // 6. Reset the model
+        m.deleteAll();
+
+        // 7. Store the operator
+        m.setOperator('=');
+      }
     }
   };
 
@@ -346,39 +334,6 @@ var controller = (function (m, v) {
     // 2. Clear both screens
     v.cleanResultScreen();
     v.cleanOperationScreen();
-  };
-
-  var resultPressed = function () {
-    var number, result;
-
-    // Exceptions: 
-    // 1. Press the result button when there is no numbers stored
-    // 2. Press the result button when there is no operator
-    // 3. Press the result button more times than one
-
-    // 1. Get the number
-    number = m.getNumber();
-
-    // First exception
-    if (number) {
-      // Second and third exception
-      if (m.getOperator() !== '' && m.getOperator() !== '=') {
-        // 2. Get the result
-        result = m.operation();
-
-        // 3. Display in the operator screen
-        v.displayOperation(number, '=');
-
-        // 4. Display the result
-        v.displayNumber(result);
-
-        // 6. Reset the model
-        m.deleteAll();
-
-        // 7. Store the operator
-        m.storeOperator('=');
-      }
-    }
   };
 
   return {
