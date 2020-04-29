@@ -151,7 +151,11 @@ var model = (function () {
           result = number1 * number2;
           break;
         case '/':
-          result = number1 / number2;
+          if (number2 === 0) {
+            result = 'Undefined result'
+          } else {
+            result = number1 / number2;
+          }
           break;
       }
 
