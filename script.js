@@ -222,10 +222,13 @@ var controller = (function (m, v) {
 
     /* Exceptions:
     // 1. The user adds operators more times than one
-        -> Check if there is not operator and stored number in the model
+        -> Check if there is not operator, storedNumber and number in the model
   
-    // 2. The user pressed the assignment operator
-        -> -
+    // 2. The user wants to put a negative number starting at the beginning
+        -> Check that there is not operator, but there is a number entered and the number is not the negative symbol
+
+      3. The user wants to do an operation 'at the time' that a new operator is added
+        -> Check that there is an existing operator and there is a number entered and the number is not the negative symbol plus there is an storedNumber variable
     */
 
     // If the operator is not setted and the stored number is null or undefined
@@ -238,6 +241,7 @@ var controller = (function (m, v) {
 
       // 3. Display on screen
       v.displayNumber(number);
+
     } else if (!m.getOperator() && m.getNumber() && m.getNumber() !== '-') {
       // 1. Get the number
       number = m.getNumber();
@@ -253,7 +257,8 @@ var controller = (function (m, v) {
 
       // 5. Display the operation into the operation screen
       v.displayOperation(number, operator);
-    } else if (m.getNumber() && m.getNumber() !== '-' && m.getStoredNumber()) {
+
+    } else if (m.getOperator() && m.getNumber() && m.getNumber() !== '-' && m.getStoredNumber()) {
       // 1. Get the first number
       number = m.getNumber();
 
