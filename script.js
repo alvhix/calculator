@@ -82,7 +82,7 @@ var model = (function () {
     deleteAll: function () {
       calculator = {
         number: '',
-        storedNumber: '',
+        storedNumber: 0,
         operator: '',
         decimal: false
       }
