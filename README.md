@@ -1,6 +1,8 @@
 # calculator
 Calculator using JavaScript ES5
 
+![Calculator screenshot](docs/calculatorScreenshot.png)
+
 ## Description
 Calculator project using JavaScript, with exceptions and the functionality of calculating 'at the time'
 
