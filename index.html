@@ -1,96 +1,107 @@
 <!DOCTYPE html>
 <html lang="es">
+  <head>
+    <link rel="stylesheet" href="styles/style.css" />
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Calculadora</title>
+  </head>
 
-<head>
-  <link rel="stylesheet" href="style.css">
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Calculadora</title>
-</head>
+  <body>
+    <table class="calculator">
+      <tr>
+        <td colspan="4">
+          <input
+            type="text"
+            class="calculator__screen calculator__screen--operations"
+            maxlength="20"
+            readonly
+          />
+        </td>
+      </tr>
 
-<body>
-  <table class="calculator">
-    <tr>
-      <td colspan="4">
-        <input type="text" class="calculator__screen calculator__screen--operations" maxlength="20" readonly>
-      </td>
-    </tr>
+      <tr>
+        <td colspan="4">
+          <input
+            type="text"
+            class="calculator__screen calculator__screen--result"
+            maxlength="20"
+            readonly
+            placeholder="0"
+          />
+        </td>
+      </tr>
 
-    <tr>
-      <td colspan="4">
-        <input type="text" class="calculator__screen calculator__screen--result" maxlength="20" readonly
-          placeholder="0">
-      </td>
-    </tr>
+      <tr>
+        <td colspan="2">
+          <input type="button" class="calculator__side-button" value="RETR" />
+        </td>
+        <td>
+          <input type="button" value="/" class="calculator__side-button" />
+        </td>
+        <td>
+          <input type="button" value="x" class="calculator__side-button" />
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <input type="button" value="7" class="calculator__button" />
+        </td>
+        <td>
+          <input type="button" value="8" class="calculator__button" />
+        </td>
+        <td>
+          <input type="button" value="9" class="calculator__button" />
+        </td>
+        <td>
+          <input type="button" value="-" class="calculator__side-button" />
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <input type="button" value="4" class="calculator__button" />
+        </td>
+        <td>
+          <input type="button" value="5" class="calculator__button" />
+        </td>
+        <td>
+          <input type="button" value="6" class="calculator__button" />
+        </td>
+        <td>
+          <input type="button" value="+" class="calculator__side-button" />
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <input type="button" value="1" class="calculator__button" />
+        </td>
+        <td>
+          <input type="button" value="2" class="calculator__button" />
+        </td>
+        <td>
+          <input type="button" value="3" class="calculator__button" />
+        </td>
+        <td>
+          <input type="button" value="AC" class="calculator__side-button" />
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2">
+          <input type="button" value="0" class="calculator__button" />
+        </td>
+        <td>
+          <input type="button" value="." class="calculator__button" />
+        </td>
+        <td>
+          <input type="button" value="=" class="calculator__side-button" />
+        </td>
+      </tr>
+    </table>
 
-    <tr>
-      <td colspan="2">
-        <input type="button" class="calculator__side-button" value="RETR">
-      </td>
-      <td>
-        <input type="button" value="/" class="calculator__side-button">
-      </td>
-      <td>
-        <input type="button" value="x" class="calculator__side-button">
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <input type="button" value="7" class="calculator__button">
-      </td>
-      <td>
-        <input type="button" value="8" class="calculator__button">
-      </td>
-      <td>
-        <input type="button" value="9" class="calculator__button">
-      </td>
-      <td>
-        <input type="button" value="-" class="calculator__side-button">
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <input type="button" value="4" class="calculator__button">
-      </td>
-      <td>
-        <input type="button" value="5" class="calculator__button">
-      </td>
-      <td>
-        <input type="button" value="6" class="calculator__button">
-      </td>
-      <td>
-        <input type="button" value="+" class="calculator__side-button">
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <input type="button" value="1" class="calculator__button">
-      </td>
-      <td>
-        <input type="button" value="2" class="calculator__button">
-      </td>
-      <td>
-        <input type="button" value="3" class="calculator__button">
-      </td>
-      <td>
-        <input type="button" value="=" class="calculator__side-button">
-      </td>
-    </tr>
-    <tr>
-      <td colspan="2">
-        <input type="button" value="0" class="calculator__button">
-      </td>
-      <td>
-        <input type="button" value="." class="calculator__button">
-      </td>
-      <td>
-        <input type="button" value="AC" class="calculator__side-button">
-      </td>
-    </tr>
-  </table>
-
-  <script src="script.js"></script>
-</body>
-
+    <script src="scripts/script.js"></script>
+  </body>
 </html>
